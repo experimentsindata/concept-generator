@@ -25,7 +25,7 @@ text_1 = text
 #Lower case
 text_1 = text_1.lower()
 
-#remove numbers and punctuation
+#remove numbers and punctuation, this is such an ugly solution, shoulf find a better one
 text_1 = text_1.replace('1', '')
 text_1 = text_1.replace('2', '')
 text_1 = text_1.replace('3', '')
@@ -43,14 +43,8 @@ text_1 = text_1.replace('?', '')
 text_1 = text_1.replace('"', '')
 text_1 = text_1.replace('/', ' ')
 
-#create extra stop words
-text_extra_stop_words = "? ! £ $ % ^ & * ( ) . , / : ; @ ' # ~ 1 2 3 4 5 6 7 8 9 0 > < "
-
 #split text
 data_subject1 = text_1.split()
-data_subject2 = text_1.split()
-data_subject3 = text_1.split()
-data_extra_stops = text_extra_stop_words.split()
 data_stop_words = stopwords.words('english')
 
 # Create the pandas DataFrame for subjects
@@ -62,9 +56,6 @@ df_extra_stops = pd.DataFrame(data_extra_stops, columns=['col_words'])
 df_subject1.drop_duplicates(subset="col_subject",
                      keep=False, inplace=True)
 
-#append extra stop words to stip words
-df_stop_words = df_stop_words.append(df_extra_stops)
-
 #strip spaces
 df_subject1['col_subject'].str.strip()
 df_stop_words['col_words'].str.strip()
@@ -73,7 +64,7 @@ df_stop_words['col_words'].str.strip()
 mask1 = ~df_subject1.col_subject.isin(df_stop_words.col_words)
 df_subject1 = df_subject1[mask1]
 
-#triplicate webpage data
+#quadruplicate webpage data
 df_subject2 = df_subject1
 df_subject3 = df_subject1
 df_subject4 = df_subject1
